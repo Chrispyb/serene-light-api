@@ -9,9 +9,11 @@ import (
     "os"
     "os/signal"
     "syscall"
+    "serene-light-api/src/srv/game"
 )
 
 var quit bool
+var world game.World
 
 func getupdates(w http.ResponseWriter, r *http.Request) {
 
@@ -27,7 +29,6 @@ func postupdates(w http.ResponseWriter, r *http.Request) {
 
 func gameloop(){
     for true{
-        fmt.Println("Howdy")
 
         if(quit){
             return
@@ -52,6 +53,7 @@ func main() {
 
     go http.ListenAndServe(":8080", mux)
 
+    world.Generate()
     gameloop()
 
 
